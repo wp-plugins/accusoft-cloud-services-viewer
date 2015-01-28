@@ -7,16 +7,16 @@ Stable tag: 1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-ACS Viewer is a document viewer that displays over a hundred different kinds of files on your website, without any additional software.
+ACS Viewer is a document viewer that displays dozens of different file types on your website, without any additional software.
 
 == Description ==
 
-ACS Viewer is a document viewer that enables you to display hundreds of
+ACS Viewer is a document viewer that enables you to display dozens of
 different kinds of files on your website without worrying about whether
 your visitors have the software to view them and without installing any
 additional hardware or software. The document files stay on your server,
 so you can update, edit and change them anytime. ACS Viewer supports
-more than a hundred file types, including DOC, PDF, PPT, XLS and CAD.
+dozens of file types, including DOC, PDF, PPT, XLS and CAD.
 
 You can view our [demo](http://www.accusoft.com/cloud-services/viewer/demo/), our [how-to's](http://www.accusoft.com/cloud-services/viewer/support/), and our [community](http://community.prizmcloud.com/).
 
