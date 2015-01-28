@@ -7,8 +7,7 @@ Stable tag: 1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-ACS (Accusoft Cloud Services) Viewer is a document viewer that displays
-over a hundred different kinds of files on your website, without any additional software.
+ACS Viewer is a document viewer that displays over a hundred different kinds of files on your website, without any additional software.
 
 == Description ==
 
