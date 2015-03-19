@@ -55,8 +55,6 @@ function acsviewer_dialog_window()
 
       <script type="text/javascript" src="<?php echo JS_PLUGIN_URL ?>/jquery/jquery.js"></script>
 
-      <!--script type="text/javascript" src="<?php echo ACSVIEWER_WP_PLUGIN_URL ?>/js/acsviewer-dialog.js"></script>
-      <script type="text/javascript" src="<?php echo ACSVIEWER_WP_PLUGIN_URL ?>/js/mcColorPicker.js"></script-->
 		</head>
 		
 		<body>
