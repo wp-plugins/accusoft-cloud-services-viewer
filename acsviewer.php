@@ -6,7 +6,7 @@ Plugin URI: http://www.accusoft.com/cloud-services/viewer/
 Description: ACS Viewer enables you to offer high-speed document viewing without worrying about additional hardware or installing software.  The documents stay on your servers, so you can delete, update, edit and change them anytime. We don't keep copies of your documents, so they are always secure!
 Author: Accusoft <cloudservices@accusoft.com>
 Author URI: http://www.accusoft.com/
-Version: 1.5
+Version: 1.6
 License: GPL2
 */
 
