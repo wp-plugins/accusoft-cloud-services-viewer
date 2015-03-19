@@ -85,7 +85,7 @@ function acsviewer_dialog_window()
 					<td align="right" class="gray dwl_gray"><label><strong>Viewer Type:</strong></label></td>
 					<td valign="top">
 						<input type="radio" value="html5" name="viewerType" onclick="javascript:pcSettings(this.value)" checked="checked" /> <span>HTML5</span>
-						<input type="radio" value="flash" name="viewerType" onclick="javascript:pcSettings(this.value)" /> <span>Flash</span>
+						<!--input type="radio" value="flash" name="viewerType" onclick="javascript:pcSettings(this.value)" /> <span>Flash</span-->
 						<input type="radio" value="slideshow" name="viewerType" onclick="javascript:pcSettings(this.value)" /> <span>Slideshow</span>
 					</td>
 				</tr>
