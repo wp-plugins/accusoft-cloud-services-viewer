@@ -5,7 +5,6 @@ if (!defined('ACSVIEWER_WP_PLUGIN_NAME'))
 
 if (!defined('ACSVIEWER_WP_PLUGIN_URL'))
 {
-	//define('ACSVIEWER_WP_PLUGIN_URL', WP_PLUGIN_URL . '/' . ACSVIEWER_WP_PLUGIN_NAME);
 	define('ACSVIEWER_WP_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 }
 
@@ -54,9 +53,6 @@ function acsviewer_dialog_window()
       <link href="<?php echo ACSVIEWER_WP_PLUGIN_URL ?>/css/acsviewer.css" type="text/css" rel="stylesheet" />
 
       <script type="text/javascript" src="<?php echo JS_PLUGIN_URL ?>/jquery/jquery.js"></script>
-
-      <!--script type="text/javascript" src="<?php echo ACSVIEWER_WP_PLUGIN_URL ?>/js/acsviewer-dialog.js"></script>
-      <script type="text/javascript" src="<?php echo ACSVIEWER_WP_PLUGIN_URL ?>/js/mcColorPicker.js"></script-->
 		</head>
 		
 		<body>
@@ -85,7 +81,6 @@ function acsviewer_dialog_window()
 					<td align="right" class="gray dwl_gray"><label><strong>Viewer Type:</strong></label></td>
 					<td valign="top">
 						<input type="radio" value="html5" name="viewerType" onclick="javascript:pcSettings(this.value)" checked="checked" /> <span>HTML5</span>
-						<!--input type="radio" value="flash" name="viewerType" onclick="javascript:pcSettings(this.value)" /> <span>Flash</span-->
 						<input type="radio" value="slideshow" name="viewerType" onclick="javascript:pcSettings(this.value)" /> <span>Slideshow</span>
 					</td>
 				</tr>
