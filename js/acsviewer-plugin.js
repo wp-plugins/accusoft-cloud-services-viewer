@@ -1,7 +1,6 @@
-(function($)
+(function($, wp)
 {
 	tinymce.PluginManager.requireLangPack('acsviewer');
-
   tinymce.create('tinymce.plugins.AcsViewerPlugin',
 	{
 		init : function(ed,url)
@@ -12,12 +11,13 @@
 				{
           title: 'Create your Viewer',
 					file : ajaxurl + '?action=acsviewer_dialog_window',
-					width : 600 + parseInt(ed.getLang('acsviewer.delta_width',0)),
-					height : 460 + parseInt(ed.getLang('acsviewer.delta_height',0)),
+					width : 1000 + parseInt(ed.getLang('acsviewer.delta_width',0)),
+					height : 800 + parseInt(ed.getLang('acsviewer.delta_height',0)),
 					inline : 1,
         },
 				{
 					plugin_url : url,
+          wp: wp,
           jQuery : $
 				})
 			});
@@ -40,10 +40,10 @@
 					author : 'Accusoft Corporation',
 					authorurl : 'http://www.accusoft.com',
 					infourl : 'http://www.accusoft.com/cloud-services/viewer/',
-					version : "1.5"
+					version : "1.7"
 			};
 		}
 	});
 
 	tinymce.PluginManager.add('acsviewer',tinymce.plugins.AcsViewerPlugin)
-})(jQuery);
+})(jQuery, wp);
