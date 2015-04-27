@@ -2,8 +2,8 @@
 Contributors: Accusoft
 Tags: document viewer, pdf, doc, ppt
 Requires at least: 4.0
-Tested up to: 4.1
-Stable tag: 1.6
+Tested up to: 4.2
+Stable tag: 1.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -20,7 +20,7 @@ dozens of file types, including DOC, PDF, PPT, XLS and CAD.
 
 You can view our [demo](http://www.accusoft.com/cloud-services/viewer/demo/), our [how-to's](http://www.accusoft.com/cloud-services/viewer/support/), and our [community](http://community.prizmcloud.com/).
 
-First, you will need to [sign up for free a Accusoft Cloud Services account](http://cloudportal.accusoft.com/?type=viewer) to begin using the ACS Viewer plugin.
+First, you will need to [sign up for free a Accusoft Cloud Services account](http://cloudportal.accusoft.com/?type=viewer). This will allow you to generate an access key that will so you can begin using the ACS Viewer plugin.
 
 == Installation ==
 
@@ -66,8 +66,8 @@ per month you will need ACS Viewer Elite Edition.
 1. Click on Pages or Posts in navigation
 2. Open an existing page/post or create a new one
 3. Within the content editor, click on the ACS Viewer Button
-4. Fill in Fields and insert
-5. Save page
+4. Configure your viewer as desired
+5. Click 'Get Code'
 
 = How do I get my ACS Viewer Key? =
 
@@ -83,6 +83,8 @@ per month you will need ACS Viewer Elite Edition.
 2. ACS Viewer options
 
 == Changelog ==
+1.7 Adding interactive configuration tool
+
 1.6 Removing deprecated viewer type 'flash'
 
 1.5 Renaming to ACS Viewer (new plugin)

@@ -6,10 +6,11 @@ Plugin URI: http://www.accusoft.com/cloud-services/viewer/
 Description: ACS Viewer enables you to offer high-speed document viewing without worrying about additional hardware or installing software.  The documents stay on your servers, so you can delete, update, edit and change them anytime. We don't keep copies of your documents, so they are always secure!
 Author: Accusoft <cloudservices@accusoft.com>
 Author URI: http://www.accusoft.com/
-Version: 1.6
+Version: 1.7
 License: GPL2
 */
-
+define (ACCUSOFT_SERVER, '//api.accusoft.com');
+define (ACCUSOFT_PATH, '/v1/viewer/');
 include_once('acsviewer-functions.php');
 
 register_activation_hook( __FILE__, 'acsviewer_plugin_activate' );
@@ -24,50 +25,66 @@ register_deactivation_hook(__FILE__, 'acsviewer_plugin_deactivate');
 function acsviewer_plugin_deactivate() {
 }
 
-function acsviewer_getdocument($atts)
+function acsviewer_getdocument($atts, $content)
 {
   $licenseKey = get_option('licenseKey');
+  parse_str(html_entity_decode($content), $params);
 
-	extract(shortcode_atts(array(
-		'key' => '',
-		'document' => '',
-		'type' => '',
-		'width' => '',
-		'height' => '',
-		'print' => '',
-		'color' => '',
-		'animtype' => '',
-		'animduration' => '',
-		'animspeed' => '',
-		'automatic' => '',
-		'showcontrols' => '',
-		'centercontrols' => '',
-		'keyboardnav' => '',
-		'hoverpause' => ''
-	), $atts));
-	$integration = "wordpress";
+  if($params['server']) {
+      $server = $params['server'];
+      unset($params['server']);
+  } else {
+      $server = ACCUSOFT_SERVER.ACCUSOFT_PATH;
+  }
 
-  if(!empty($licenseKey)) { $key = $licenseKey; }
-	
-	if (strcmp($type,"slideshow") != 0)
-	{
-		$viewerCode = "//connect.ajaxdocumentviewer.com/?key=".$key."&viewertype=".$type."&document=".$document."&viewerheight=".$height."&viewerwidth=".$width."&printButton=".$print."&toolbarColor=".$color."&integration=".$integration;
-		$iframeWidth = $width + 20;
-		$iframeHeight = $height + 40;
-	}
-	else
-	{
-		$viewerCode = "//connect.ajaxdocumentviewer.com/?key=".$key."&viewertype=".$type."&document=".$document."&viewerheight=".$height."&viewerwidth=".$width."&animtype=".$animtype."&animduration=".$animduration."&animspeed=".$animspeed."&automatic=".$automatic."&showcontrols=".$showcontrols."&centercontrols=".$centercontrols."&keyboardnav=".$keyboardnav."&hoverpause=".$hoverpause."&integration=".$integration;
-		$iframeWidth = $width + 20;
-		$iframeHeight = $height + 20;
-	}
-        if ($type == "flash" && $width < 650) {
-	    $code = "<div id=\"widtherror\" width=\"600\" height=\"100\">Prizm Viewer Error: Please choose a width of 650px or greater for your Prizm Flash Viewer, or select the HTML5 viewer if you need a smaller size</div>";
+  if ($atts) {
+      foreach ($atts as $key => $value) {
+          if (!$params[$key]) {
+              $params[$key] = $value;
+          }
+      }
+  }
+  $params = supportLegacy($params);
+
+  if(!$params['key']) {
+      $params['key'] = $licenseKey;
+  }
+  $viewerCode = $server."?";
+  if($params) {
+      foreach ($params as $key => $value) {
+          $viewerCode .= $key . "=" . $value . "&";
+      }
+  }
+    $viewerCode = rtrim($viewerCode, "&");
+
+    if (strcmp($params['viewertype'],'slideshow') != 0) {
+        if (preg_match('/.+%$/', $params['viewerheight'])) {
+            $iframeHeight = intval($params['viewerheight'])/100 * 800;
+        } else {
+            $iframeHeight = $params['viewerheight'] + 40;
         }
-        else {
-  	    $code = "<iframe src=\"".$viewerCode."\" width=\"".$iframeWidth."\" height=\"".$iframeHeight."\" frameborder =0 seemless></iframe>";
+        if (preg_match('/.+%$/', $params['viewerwidth'])) {
+            $iframeWidth = $params['viewerwidth'];
+        } else {
+            $iframeWidth = $params['viewerwidth'] + 20;
         }
-	return $code;
+    } else {
+        if (preg_match('/.+%$/', $params['viewerheight'])) {
+            $iframeHeight = intval($params['viewerheight'])/100 * 600;
+        } else {
+            $iframeHeight = $params['viewerheight'] + 20;
+        }
+        if (preg_match('/.+%$/', $params['viewerwidth'])) {
+            $iframeWidth = $params['viewerWidth'];
+        } else {
+            $iframeWidth = $params['viewerwidth'] + 20;
+        }
+    }
+
+    $code = "<iframe src=\"".$viewerCode."\" width=\"".$iframeWidth."\" height=\"".$iframeHeight."\" frameborder =0 seemless></iframe>";
+//    $code = "<iframe src=\"".$viewerCode."\" width=\"100%\" height=\"100%\" frameborder =0 seemless></iframe>";
+
+  return $code;
 }
 
 // Activate Shortcode to Retrive Document with ACS Viewer
@@ -98,4 +115,39 @@ function acsviewer_settings()
 	if (! user_can_access_admin_page()) wp_die('You do not have sufficient permissions to access this page');
 
 	require(ABSPATH. 'wp-content/plugins/'. ACSVIEWER_WP_PLUGIN_NAME .'/acsviewer-settings.php');
+}
+
+add_action('admin_enqueue_scripts', 'enqueue_scripts_styles_admin');
+function enqueue_scripts_styles_admin(){
+    wp_enqueue_media();
+}
+
+function supportLegacy($atts)
+{
+    if($atts['type']) {
+        $atts['viewertype'] = $atts['type'];
+        unset($atts['type']);
+    }
+    if ($atts['width']) {
+        $atts['viewerwidth'] = $atts['width'];
+        unset($atts['width']);
+    }
+    if($atts['height']) {
+        $atts['viewerheight'] = $atts['height'];
+        unset($atts['height']);
+    }
+    if($atts['color']) {
+        $atts['lowerToolbarColor'] = $atts['color'];
+        unset($atts['color']);
+    }
+    if ($atts['print'] == "No") {
+        if (strlen($atts['hidden']) > 0) {
+            $atts['hidden'] .= ',print';
+        } else {
+            $atts['hidden'] = 'print';
+        }
+        unset($atts['print']);
+    }
+    return $atts;
+
 }

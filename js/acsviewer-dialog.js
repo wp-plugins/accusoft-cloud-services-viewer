@@ -1,32 +1,29 @@
-if(top.tinymce.majorVersion < '4') {
+'use strict';
+
+if (top.tinymce.majorVersion < '4') {
        tinyMCEPopup.requireLangPack();
-}	
+}
+
+var args = top.tinymce.activeEditor.windowManager.getParams();
+console.log(args.jQuery);
+var wp = args.wp;
+var $ = args.jQuery;
+var context = document.getElementsByTagName("body")[0];
+
 var AcsViewerInsertDialog =
-{
-	init : function()
-	{
-		jQuery('input[name=viewerType], input[name=viewerPrintButton], #viewerDocument').on("click", function()
-		{
-      buildShortcode();
-		});
-		jQuery('#licenseKey, #viewerWidth, #viewerHeight, #viewerToolbarColor, #viewerDocument, #viewerAnimDuration, #viewerAnimSpeed').on("blur", function()
-		{
-			buildShortcode();
-		});
-		jQuery('#viewerAnimType, #viewerAutomatic, #viewerShowControls, #viewerCenterControls, #viewerKeyboardNav, #viewerHoverPause, #viewerDocument').change(function()
-		{
-			buildShortcode();
-		});	
-	},
-	insert : function()
-	{
+  {
+    init : function () {
+      console.log($('#viewerheight', context).val());
+    },
+	  insert : function()
+	  {
       // insert the contents from the input into the document
       if(top.tinymce.majorVersion < '4') {
-        tinyMCEPopup.editor.execCommand("mceInsertContent", false, jQuery("#shortcode").val());
+        tinyMCEPopup.editor.execCommand("mceInsertContent", false, $("#codeBox", context).val());
         tinyMCEPopup.close();
       }
       else {
-        top.tinymce.activeEditor.insertContent(jQuery("#shortcode").val());
+        top.tinymce.activeEditor.insertContent($("#codeBox", context).val());
         top.tinymce.activeEditor.windowManager.close(this);
       }
 
@@ -39,128 +36,8 @@ var AcsViewerInsertDialog =
   }
 };
 
-function pcSettings(viewerType)
-{
-	if (viewerType == "slideshow")
-	{
-		jQuery("#slideshowViewer").removeClass("hide").addClass("show");
-		jQuery("#documentViewer").removeClass("show").addClass("hide");
-	}
-	else
-	{
-		jQuery("#slideshowViewer").removeClass("show").addClass("hide");
-		jQuery("#documentViewer").removeClass("hide").addClass("show");
-	}
-  buildShortcode();
-}
 
-function buildShortcode()
-{
-	var shortcode = 'acsviewer';			
-	var licenseKey = jQuery("#licenseKey").val();
-  var licenseKeyInput = '';
-  if(jQuery("#licenseKeyInput").length > 0) {
-    licenseKeyInput = jQuery("#licenseKeyInput").val();
-  }
-	var viewerType = jQuery("input[name=viewerType]:checked").val();
-	var document = jQuery("#viewerDocument").val();
-	var viewerWidth = jQuery("#viewerWidth").val();
-	var viewerHeight = jQuery("#viewerHeight").val();
-	var toolbarColor = jQuery("#viewerToolbarColor").val();
-	toolbarColor = toolbarColor.replace("#","");
-	var printButton = jQuery("input[name=viewerPrintButton]:checked").val();
-	
-	var animType = jQuery("#viewerAnimType").val();
-	var animDuration = jQuery("#viewerAnimDuration").val();
-	var animSpeed = jQuery("#viewerAnimSpeed").val();
-	var automatic = jQuery("#viewerAutomatic").val();
-	var showControls = jQuery("#viewerShowControls").val();
-	var centerControls = jQuery("#viewerCenterControls").val();
-	var keyboardNav = jQuery("#viewerKeyboardNav").val();
-	var hoverPause = jQuery("#viewerHoverPause").val();
-	
-	if (licenseKeyInput.length > 0)
-	{
-		shortcode += ' key="' + licenseKeyInput + '"';
-	}
-	
-	if (viewerType.length > 0)
-	{
-		shortcode += ' type="' + viewerType + '"';
-	}
-	
-	if (document.length > 0)
-	{
-		shortcode += ' document="' + document + '"';
-	}
-	
-	if (viewerWidth.length > 0)
-	{
-		shortcode += ' width="' + viewerWidth + '"';
-	}
-	
-	if (viewerHeight.length > 0)
-	{
-		shortcode += ' height="' + viewerHeight + '"';
-	}
-	
-	if (viewerType != 'slideshow')
-	{
-		if (printButton.length > 0)
-		{
-			shortcode += ' print="' + printButton + '"';
-		}
-		
-		if (toolbarColor.length > 0)
-		{
-			shortcode += ' color="' + toolbarColor + '"';
-		}
-	}
-	else
-	{
-		if (animType.length > 0)
-		{
-			shortcode += ' animtype="' + animType + '"';
-		}
-		
-		if (animDuration.length > 0)
-		{
-			shortcode += ' animduration="' + animDuration + '"';
-		}
-		
-		if (animSpeed.length > 0)
-		{
-			shortcode += ' animspeed="' + animSpeed + '"';
-		}
-		
-		if (automatic.length > 0)
-		{
-			shortcode += ' automatic="' + automatic + '"';
-		}
-		
-		if (showControls.length > 0)
-		{
-			shortcode += ' showcontrols="' + showControls + '"';
-		}
-		
-		if (centerControls.length > 0)
-		{
-			shortcode += ' centercontrols="' + centerControls + '"';
-		}
-		
-		if (keyboardNav.length > 0)
-		{
-			shortcode += ' keyboardnav="' + keyboardNav + '"';
-		}
-		
-		if (hoverPause.length > 0)
-		{
-			shortcode += ' hoverpause="' + hoverPause + '"';
-		}
-	}
-	
-	jQuery('#shortcode').val('['+shortcode+']');
-}
+
 
 if(top.tinymce.majorVersion < '4') {
       tinyMCEPopup.onInit.add(AcsViewerInsertDialog.init, AcsViewerInsertDialog);
@@ -168,3 +45,40 @@ if(top.tinymce.majorVersion < '4') {
 else {
       AcsViewerInsertDialog.init();
 }
+
+var custom_uploader;
+
+$('#accusoft_upload_button', context).click(function(e) {
+    e.preventDefault();
+
+    var $upload_button = $(this);
+
+    //Extend the wp.media object
+    custom_uploader = wp.media.frames.file_frame = wp.media({
+        title: 'Choose Document',
+        button: {
+            text: 'Choose Document'
+        },
+        multiple: false
+    });
+
+    //When a file is selected, grab the URL and set it as the text field's value
+    custom_uploader.on('select', function() {
+        var attachment = custom_uploader.state().get('selection').first().toJSON();
+        $upload_button.closest('body').find('#document').val(attachment.url);
+        $upload_button.closest('body').find('#document').trigger("input");
+    });
+
+    //Open the uploader dialog
+    custom_uploader.open();
+
+});
+
+$('a[href="#collapseFour"]', context).on("click", function () {
+  console.log("test");
+  AcsViewerInsertDialog.insert();
+});
+
+$('#cancelButton', context).on("click", function () {
+  AcsViewerInsertDialog.close();
+});
