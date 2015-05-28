@@ -18,7 +18,7 @@ additional hardware or software. The document files stay on your server,
 so you can update, edit and change them anytime. ACS Viewer supports
 dozens of file types, including DOC, PDF, PPT, XLS and CAD.
 
-You can view our [demo](http://www.accusoft.com/cloud-services/viewer/demo/), our [how-to's](http://www.accusoft.com/cloud-services/viewer/support/), and our [community](http://community.prizmcloud.com/).
+You can view our [demo](http://www.accusoft.com/cloud-services/viewer/demo/), our [how-to's](http://www.accusoft.com/cloud-services/viewer/support/), and our [community](https://accusofthelp.zendesk.com/hc/communities/public/questions).
 
 First, you will need to [sign up for free a Accusoft Cloud Services account](http://cloudportal.accusoft.com/?type=viewer). This will allow you to generate an access key that will so you can begin using the ACS Viewer plugin.
 

@@ -75,7 +75,7 @@ function acsviewer_getdocument($atts, $content)
             $iframeHeight = $params['viewerheight'] + 20;
         }
         if (preg_match('/.+%$/', $params['viewerwidth'])) {
-            $iframeWidth = $params['viewerWidth'];
+            $iframeWidth = $params['viewerwidth'];
         } else {
             $iframeWidth = $params['viewerwidth'] + 20;
         }
